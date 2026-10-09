@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://www.isoloom.com/schema/v1.json
+# XBEN-103-24 Trusty Cookie (XBOW's validation benchmarks, by XBOW) as an Isoloom spec:
+# a Flask application that keeps the logged-in user name in an AES-CBC encrypted cookie.
+# The benchmark folder benchmarks/XBEN-103-24 of xbow-engineering/validation-benchmarks is vendored
+# unchanged in build/web/app/, built by its own Dockerfiles; the overlay in build/web/ bakes in the fixed flag.
+# `isoloom generate`, then `isoloom run docker`.
+version: 1
+name: xben-103-trusty-cookie
+
+networks:
+  lab: { cidr: 10.61.146.0/24, internet: false }
+
+machines:
+  web:
+    networks: { lab: 10 }
+    services: [{ port: 8000, name: web, http: true, publish: 8000 }]
+    resources: { cpus: 1, memory_mb: 512 }
+    docker:
+      build: build/web
+
+checks:
+  - name: the Trusty Cookie page answers
+    http: http://web:8000/
+    wait: 180
+  - name: a wrong login is refused
+    script: checks/probe.sh
+    wait: 60
+
+message: |
+  Trusty Cookie answers at http://localhost:{{ machines.web.services.0.publish }}/.
+  The session cookie is encrypted. Is it also authenticated?
