@@ -3,7 +3,9 @@
   "resolved_version": 1,
   "name": "xben-103-trusty-cookie",
   "instance": null,
-  "inputs": [],
+  "inputs": [
+    "CTF_FLAG_MAIN"
+  ],
   "networks": {
     "lab": {
       "cidr": "10.61.146.0/24",
@@ -41,8 +43,12 @@
         }
       ],
       "depends_on": [],
-      "inputs": [],
-      "volumes": {},
+      "inputs": [
+        "CTF_FLAG_MAIN"
+      ],
+      "volumes": {
+        "ctf": "/ctf"
+      },
       "resources": {
         "cpus": 1,
         "memory_mb": 512,
@@ -94,7 +100,8 @@
       "vagrant": "needs `vm:` on web",
       "proxmox": "needs `vm:` on web",
       "cloud-vm": "needs `vm:` on web",
-      "external": "needs `external:` on web"
+      "external": "needs `external:` on web",
+      "cloud-services": "left out by `targets:`"
     }
   },
   "checks": {

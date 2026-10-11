@@ -1,0 +1,74 @@
+{
+  "objectives": [
+    {
+      "key": "main",
+      "title": "Read the flag",
+      "prompt": "Exploit the insecure direct object reference weakness of a Flask application that keeps the logged-in user name in an AES-CBC encrypted cookie and recover the flag (FLAG{...}) it guards.",
+      "check": {
+        "evidence": "SECRET",
+        "format": "FLAG{%s}"
+      },
+      "dev": "FLAG{dev-xben-103-trusty-cookie}",
+      "hints": [
+        "Note every numeric or encoded identifier the application sends, and whether the server checks that it belongs to you.",
+        "Look at what the server reveals when it fails to decrypt or verify a value you sent."
+      ],
+      "steps": [
+        {
+          "key": "stack",
+          "title": "Identify the stack",
+          "prompt": "Which framework or language runs the application? (name only)",
+          "check": {
+            "answer": [
+              "flask",
+              "python",
+              "werkzeug",
+              "python flask"
+            ]
+          }
+        },
+        {
+          "key": "class",
+          "title": "Name the weakness",
+          "prompt": "Which access-control weakness lets you reach another account's objects by changing an identifier?",
+          "check": {
+            "answer": [
+              "idor",
+              "insecure direct object reference",
+              "insecure direct object references",
+              "bola",
+              "broken object level authorization"
+            ]
+          }
+        },
+        {
+          "key": "technique",
+          "title": "Name the attack",
+          "prompt": "Which attack changes CBC plaintext by altering the previous ciphertext block?",
+          "check": {
+            "answer": [
+              "bit flipping",
+              "bit-flipping",
+              "cbc bit flipping",
+              "cbc bit-flipping",
+              "bit flip"
+            ]
+          }
+        },
+        {
+          "key": "crypto",
+          "title": "Name the second weakness",
+          "prompt": "Which kind of weakness does the challenge revolve around?",
+          "check": {
+            "answer": [
+              "cryptography",
+              "crypto",
+              "weak cryptography",
+              "broken cryptography"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
